@@ -49,7 +49,7 @@
 
 1. **Скачайте** этот репозиторий или клонируйте его:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/EU4-DLC-Unlocker-macOS.git
+   git clone https://github.com/KyLaEga/EU4-DLC-Unlocker-macOS.git
    ```
 
 2. **Откройте Терминал** и перейдите в папку:
@@ -68,8 +68,10 @@
 
 ### Способ 2: Ручная установка
 
-1. **Найдите вашу установку EU4.** Типичные расположения:
+1. **Найдите вашу установку EU4.** Стандартное расположение:
    - `/Users/ВАШ_ПОЛЬЗОВАТЕЛЬ/Library/Application Support/Steam/steamapps/common/Europa Universalis IV`
+   
+   Альтернативно (внешний диск):
    - `/Volumes/ВАШ_ДИСК/SteamLibrary/steamapps/common/Europa Universalis IV`
 
 2. **Найдите `libsteam_api.dylib`:**

@@ -2,11 +2,11 @@
 
 # ============================================
 # Europa Universalis IV - DLC Unlocker для macOS
-# Версия 2.0 - Улучшенный поиск файлов
+# Version 2.1
 # ============================================
 
 echo "============================================"
-echo "EU4 DLC Unlocker Installer для macOS v2.0"
+echo "EU4 DLC Unlocker Installer для macOS v2.1"
 echo "============================================"
 echo ""
 
@@ -51,7 +51,7 @@ if [ -z "$STEAM_API_PATH" ]; then
     echo ""
     echo "Игра не найдена в стандартных местах."
     echo "Укажите полный путь к папке Europa Universalis IV"
-    echo "(например: /Volumes/KINGSTON/SteamLibrary/steamapps/common/Europa Universalis IV)"
+    echo "(например: /Users/$USER/Library/Application Support/Steam/steamapps/common/Europa Universalis IV)"
     echo ""
     read -p "Путь: " CUSTOM_PATH
     
@@ -105,12 +105,19 @@ cp -r "$SCRIPT_DIR/steam_settings/"* "$STEAM_API_DIR/steam_settings/"
 # Также копируем steam_appid.txt в ту же директорию
 cp "$SCRIPT_DIR/steam_settings/steam_appid.txt" "$STEAM_API_DIR/"
 
+# Создаём глобальную папку настроек Goldberg
+GOLDBERG_SETTINGS="$HOME/Library/Application Support/Goldberg SteamEmu Saves/settings"
+mkdir -p "$GOLDBERG_SETTINGS"
+cp "$SCRIPT_DIR/steam_settings/DLC.txt" "$GOLDBERG_SETTINGS/"
+echo "236850" > "$GOLDBERG_SETTINGS/steam_appid.txt"
+
 echo ""
 echo "============================================"
 echo "УСТАНОВКА ЗАВЕРШЕНА!"
 echo "============================================"
 echo ""
 echo "Файлы установлены в: $STEAM_API_DIR"
+echo "Глобальные настройки: $GOLDBERG_SETTINGS"
 echo ""
 echo "Теперь запустите игру через Steam."
 echo "Все DLC должны быть разблокированы."
@@ -119,5 +126,5 @@ echo "ВАЖНО: Для работы требуется, чтобы базов�
 echo "версия игры была куплена в Steam."
 echo ""
 echo "Для восстановления оригинала выполните:"
-echo "cp \"$BACKUP_PATH\" \"$STEAM_API_PATH\""
+echo "./uninstall_dlc_unlocker.sh"
 echo ""

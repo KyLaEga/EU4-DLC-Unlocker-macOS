@@ -49,7 +49,7 @@ The tool replaces the original `libsteam_api.dylib` with a modified version that
 
 1. **Download** this repository or clone it:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/EU4-DLC-Unlocker-macOS.git
+   git clone https://github.com/KyLaEga/EU4-DLC-Unlocker-macOS.git
    ```
 
 2. **Open Terminal** and navigate to the folder:
@@ -68,8 +68,10 @@ The tool replaces the original `libsteam_api.dylib` with a modified version that
 
 ### Method 2: Manual installation
 
-1. **Find your EU4 installation.** Common locations:
+1. **Find your EU4 installation.** Default location:
    - `/Users/YOUR_NAME/Library/Application Support/Steam/steamapps/common/Europa Universalis IV`
+   
+   Alternative (external drive):
    - `/Volumes/YOUR_DRIVE/SteamLibrary/steamapps/common/Europa Universalis IV`
 
 2. **Locate `libsteam_api.dylib`:**
