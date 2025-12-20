@@ -10,6 +10,10 @@
 
 ## ⚠️ Descargo de responsabilidad
 
+> **⚠️ IMPORTANTE: Esta herramienta solo funciona en modo UN JUGADOR!**  
+> El multijugador NO está soportado. El juego no podrá conectarse a los servidores de Steam con la biblioteca modificada.
+
+
 > **Este software se proporciona únicamente con fines educativos.**  
 > Debes poseer una copia legítima de Europa Universalis IV en Steam para usar esta herramienta.  
 > Esta herramienta NO descarga contenido DLC — solo desbloquea los DLC que ya están presentes en los archivos del juego.  

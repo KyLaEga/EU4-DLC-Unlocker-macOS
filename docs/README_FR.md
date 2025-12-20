@@ -10,6 +10,10 @@
 
 ## ⚠️ Avertissement
 
+> **⚠️ IMPORTANT: Cet outil fonctionne uniquement en mode SOLO!**  
+> Le multijoueur N'est PAS pris en charge. Le jeu ne pourra pas se connecter aux serveurs Steam avec la bibliothèque modifiée.
+
+
 > **Ce logiciel est fourni à des fins éducatives uniquement.**  
 > Vous devez posséder une copie légitime d'Europa Universalis IV sur Steam pour utiliser cet outil.  
 > Cet outil NE télécharge PAS de contenu DLC — il déverrouille uniquement les DLC déjà présents dans vos fichiers de jeu.  

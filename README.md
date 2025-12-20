@@ -15,6 +15,9 @@
 > This tool does NOT download any DLC content — it only unlocks DLCs that are already present in your game files.  
 > **Use at your own risk.** The authors are not responsible for any consequences.
 
+> **⚠️ IMPORTANT: This tool works only for SINGLE-PLAYER mode!**  
+> Multiplayer is NOT supported. The game will not connect to Steam servers with the modified library.
+
 ---
 
 ## 📖 Description
@@ -27,6 +30,7 @@ The tool replaces the original `libsteam_api.dylib` with a modified version that
 
 ### Features
 
+- ✅ **Single-player only** (multiplayer not supported)
 - ✅ Automatic detection of EU4 installation path
 - ✅ Automatic backup of original files
 - ✅ Easy installation and uninstallation scripts

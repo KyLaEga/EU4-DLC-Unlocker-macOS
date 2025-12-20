@@ -10,6 +10,10 @@
 
 ## ⚠️ Haftungsausschluss
 
+> **⚠️ WICHTIG: Dieses Tool funktioniert nur im EINZELSPIELER-Modus!**  
+> Multiplayer wird NICHT unterstützt. Das Spiel kann sich mit der modifizierten Bibliothek nicht mit Steam-Servern verbinden.
+
+
 > **Diese Software wird nur zu Bildungszwecken bereitgestellt.**  
 > Sie müssen eine legitime Kopie von Europa Universalis IV auf Steam besitzen, um dieses Tool zu verwenden.  
 > Dieses Tool lädt KEINE DLC-Inhalte herunter — es entsperrt nur DLCs, die bereits in Ihren Spieldateien vorhanden sind.  
