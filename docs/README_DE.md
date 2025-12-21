@@ -11,7 +11,7 @@
 ## ⚠️ Haftungsausschluss
 
 > **⚠️ WICHTIG: Dieses Tool funktioniert nur im EINZELSPIELER-Modus!**  
-> Multiplayer wird NICHT unterstützt. Das Spiel kann sich mit der modifizierten Bibliothek nicht mit Steam-Servern verbinden.
+> Multiplayer wird NICHT unterstützt. Sie können keine Freunde einladen oder Multiplayer-Sitzungen über Steam oder den Paradox Launcher mit der modifizierten Bibliothek beitreten.
 
 
 > **Diese Software wird nur zu Bildungszwecken bereitgestellt.**  

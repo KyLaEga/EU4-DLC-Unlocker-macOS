@@ -11,7 +11,7 @@
 ## ⚠️ Avertissement
 
 > **⚠️ IMPORTANT: Cet outil fonctionne uniquement en mode SOLO!**  
-> Le multijoueur N'est PAS pris en charge. Le jeu ne pourra pas se connecter aux serveurs Steam avec la bibliothèque modifiée.
+> Le multijoueur N'est PAS pris en charge. Vous ne pouvez pas inviter des amis ou rejoindre des sessions multijoueur via Steam ou le Paradox Launcher avec la bibliothèque modifiée.
 
 
 > **Ce logiciel est fourni à des fins éducatives uniquement.**  

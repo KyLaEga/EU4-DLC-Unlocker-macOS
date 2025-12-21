@@ -16,7 +16,7 @@
 > **Use at your own risk.** The authors are not responsible for any consequences.
 
 > **⚠️ IMPORTANT: This tool works only for SINGLE-PLAYER mode!**  
-> Multiplayer is NOT supported. The game will not connect to Steam servers with the modified library.
+> Multiplayer is NOT supported. You cannot invite friends or join multiplayer sessions through Steam or the Paradox Launcher with the modified library.
 
 ---
 

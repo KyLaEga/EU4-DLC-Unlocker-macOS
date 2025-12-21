@@ -11,7 +11,7 @@
 ## ⚠️ Descargo de responsabilidad
 
 > **⚠️ IMPORTANTE: Esta herramienta solo funciona en modo UN JUGADOR!**  
-> El multijugador NO está soportado. El juego no podrá conectarse a los servidores de Steam con la biblioteca modificada.
+> El multijugador NO está soportado. No puedes invitar amigos ni unirte a sesiones multijugador a través de Steam o el Paradox Launcher con la biblioteca modificada.
 
 
 > **Este software se proporciona únicamente con fines educativos.**  
