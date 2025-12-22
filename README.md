@@ -41,8 +41,17 @@ The tool replaces the original `libsteam_api.dylib` with a modified version that
 
 ## 📋 Requirements
 
-- macOS 10.13 or later
-- Europa Universalis IV (legitimately owned on Steam)
+### Supported Platforms
+
+| Platform | Architecture | Status |
+|----------|--------------|--------|
+| macOS 10.13+ | Intel (x86_64) | ✅ Supported |
+| macOS 11+ | Apple Silicon (M1/M2/M3) | ✅ Supported (via Rosetta 2) |
+
+### Prerequisites
+
+- macOS 10.13 (High Sierra) or newer
+- Europa Universalis IV (legitimately purchased on Steam)
 - DLC content files (must be obtained separately)
 
 ---
