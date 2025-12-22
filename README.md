@@ -1,5 +1,7 @@
 # EU4 DLC Unlocker for macOS
 
+**Version 3.0 - Now using CreamAPI v5.3.0.0 with Multiplayer Support!**
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-macOS-blue.svg)](https://www.apple.com/macos/)
 [![Game](https://img.shields.io/badge/Game-Europa%20Universalis%20IV-red.svg)](https://store.steampowered.com/app/236850/)
@@ -15,29 +17,27 @@
 > This tool does NOT download any DLC content — it only unlocks DLCs that are already present in your game files.  
 > **Use at your own risk.** The authors are not responsible for any consequences.
 
-> **⚠️ IMPORTANT: This tool works only for SINGLE-PLAYER mode!**  
-> Multiplayer is NOT supported. You cannot invite friends or join multiplayer sessions through Steam or the Paradox Launcher with the modified library.
->
-> **🌐 Want to play ONLINE?** Use [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) instead — it supports multiplayer on all platforms (Windows, macOS, Linux).
+> **✅ Multiplayer IS supported with CreamAPI!**  
+> You can invite friends and join multiplayer sessions through Steam or the Paradox Launcher.
 
 ---
 
 ## 📖 Description
 
-This is a DLC unlocker for **Europa Universalis IV** on **macOS**. It uses the [Goldberg Steam Emulator](https://github.com/inflation/goldberg_emulator) to emulate DLC ownership for games legitimately owned on Steam.
+This is a DLC unlocker for **Europa Universalis IV** on **macOS**. It uses [CreamAPI v5.3.0.0](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) to unlock DLC ownership for games legitimately owned on Steam.
 
 ### How it works
 
-The tool replaces the original `libsteam_api.dylib` with a modified version that tells the game you own all DLCs. The actual DLC content files must already be present in your game directory.
+The tool replaces the original `libsteam_api.dylib` with CreamAPI, which tells the game you own all DLCs. The actual DLC content files must already be present in your game directory.
 
 ### Features
 
-- ✅ **Single-player only** (multiplayer not supported)
+- ✅ **Multiplayer supported!**
 - ✅ Automatic detection of EU4 installation path
 - ✅ Automatic backup of original files
 - ✅ Easy installation and uninstallation scripts
 - ✅ Support for external drives and custom installation paths
-- ✅ All 60+ EU4 DLCs included in configuration
+- ✅ All 100+ EU4 DLCs included in configuration
 
 ---
 
@@ -95,20 +95,19 @@ The tool replaces the original `libsteam_api.dylib` with a modified version that
    ```
    Usually found in: `eu4.app/Contents/Frameworks/`
 
-3. **Backup the original file:**
+3. **Backup the original file (rename to libsteam_api_o.dylib):**
    ```bash
-   cp "/path/to/libsteam_api.dylib" "/path/to/libsteam_api.dylib.backup"
+   cp "/path/to/libsteam_api.dylib" "/path/to/libsteam_api_o.dylib"
    ```
 
-4. **Copy the modified library:**
+4. **Copy the CreamAPI library:**
    ```bash
    cp libsteam_api.dylib "/path/to/eu4.app/Contents/Frameworks/"
    ```
 
-5. **Copy the steam_settings folder:**
+5. **Copy the cream_api.ini configuration:**
    ```bash
-   cp -r steam_settings "/path/to/eu4.app/Contents/Frameworks/"
-   cp steam_settings/steam_appid.txt "/path/to/eu4.app/Contents/Frameworks/"
+   cp cream_api.ini "/path/to/eu4.app/Contents/Frameworks/"
    ```
 
 ---
@@ -122,7 +121,8 @@ Run the uninstaller script:
 
 Or manually restore the backup:
 ```bash
-cp "/path/to/libsteam_api.dylib.backup" "/path/to/libsteam_api.dylib"
+cp "/path/to/libsteam_api_o.dylib" "/path/to/libsteam_api.dylib"
+rm "/path/to/cream_api.ini"
 ```
 
 ---
@@ -153,14 +153,14 @@ All EU4 DLCs are included in the configuration file, including:
 - Rule Britannia, Dharma, Golden Century
 - Emperor, Leviathan, Origins
 - Lions of the North, Domination, King of Kings
-- And all content packs!
+- Winds of Change
+- And all content packs, music packs, and unit packs!
 
 ---
 
 ## 🙏 Credits
 
-- [Goldberg Steam Emulator](https://github.com/Mr_Goldberg/goldberg_emulator) by Mr_Goldberg
-- [macOS build](https://github.com/inflation/goldberg_emulator) by inflation
+- [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) by deadmau5
 - Inspired by [CreamInstaller](https://github.com/pointfeev/CreamInstaller)
 
 ---

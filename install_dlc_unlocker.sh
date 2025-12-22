@@ -2,11 +2,13 @@
 
 # ============================================
 # Europa Universalis IV - DLC Unlocker для macOS
-# Version 2.1
+# Version 3.0 - CreamAPI v5.3.0.0
+# Supports MULTIPLAYER!
 # ============================================
 
 echo "============================================"
-echo "EU4 DLC Unlocker Installer для macOS v2.1"
+echo "EU4 DLC Unlocker Installer для macOS v3.0"
+echo "CreamAPI v5.3.0.0 - Multiplayer Supported!"
 echo "============================================"
 echo ""
 
@@ -82,8 +84,8 @@ echo "Директория: $STEAM_API_DIR"
 echo "============================================"
 echo ""
 
-# Создаем бэкап
-BACKUP_PATH="${STEAM_API_PATH}.backup"
+# Создаем бэкап (CreamAPI использует libsteam_api_o.dylib)
+BACKUP_PATH="${STEAM_API_DIR}/libsteam_api_o.dylib"
 if [ ! -f "$BACKUP_PATH" ]; then
     echo "Создаю бэкап оригинального файла..."
     cp "$STEAM_API_PATH" "$BACKUP_PATH"
@@ -92,38 +94,32 @@ else
     echo "Бэкап уже существует: $BACKUP_PATH"
 fi
 
-# Копируем модифицированную библиотеку
+# Копируем CreamAPI библиотеку
 echo ""
-echo "Копирую Goldberg Steam Emulator..."
+echo "Копирую CreamAPI v5.3.0.0..."
 cp "$SCRIPT_DIR/libsteam_api.dylib" "$STEAM_API_PATH"
 
-# Копируем конфигурацию
+# Копируем конфигурацию cream_api.ini
 echo "Копирую конфигурацию DLC..."
-mkdir -p "$STEAM_API_DIR/steam_settings"
-cp -r "$SCRIPT_DIR/steam_settings/"* "$STEAM_API_DIR/steam_settings/"
+cp "$SCRIPT_DIR/cream_api.ini" "$STEAM_API_DIR/"
 
-# Также копируем steam_appid.txt в ту же директорию
-cp "$SCRIPT_DIR/steam_settings/steam_appid.txt" "$STEAM_API_DIR/"
-
-# Создаём глобальную папку настроек Goldberg
-GOLDBERG_SETTINGS="$HOME/Library/Application Support/Goldberg SteamEmu Saves/settings"
-mkdir -p "$GOLDBERG_SETTINGS"
-cp "$SCRIPT_DIR/steam_settings/DLC.txt" "$GOLDBERG_SETTINGS/"
-echo "236850" > "$GOLDBERG_SETTINGS/steam_appid.txt"
+# Устанавливаем права
+chmod 755 "$STEAM_API_PATH"
+chmod 644 "$STEAM_API_DIR/cream_api.ini"
 
 echo ""
 echo "============================================"
 echo "УСТАНОВКА ЗАВЕРШЕНА!"
 echo "============================================"
 echo ""
-echo "Файлы установлены в: $STEAM_API_DIR"
-echo "Глобальные настройки: $GOLDBERG_SETTINGS"
+echo "CreamAPI v5.3.0.0 установлен в: $STEAM_API_DIR"
 echo ""
-echo "Теперь запустите игру через Steam."
-echo "Все DLC должны быть разблокированы."
+echo "✅ Все DLC разблокированы"
+echo "✅ Мультиплеер ПОДДЕРЖИВАЕТСЯ!"
 echo ""
-echo "ВАЖНО: Для работы требуется, чтобы базовая"
-echo "версия игры была куплена в Steam."
+echo "ВАЖНО:"
+echo "- Базовая версия игры должна быть куплена в Steam"
+echo "- Файлы контента DLC должны быть в папке dlc/"
 echo ""
 echo "Для восстановления оригинала выполните:"
 echo "./uninstall_dlc_unlocker.sh"
