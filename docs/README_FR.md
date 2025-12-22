@@ -12,6 +12,8 @@
 
 > **⚠️ IMPORTANT: Cet outil fonctionne uniquement en mode SOLO!**  
 > Le multijoueur N'est PAS pris en charge. Vous ne pouvez pas inviter des amis ou rejoindre des sessions multijoueur via Steam ou le Paradox Launcher avec la bibliothèque modifiée.
+>
+> **🌐 Vous voulez jouer EN LIGNE?** Utilisez [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) sur Windows — il prend en charge le multijoueur.
 
 
 > **Ce logiciel est fourni à des fins éducatives uniquement.**  
