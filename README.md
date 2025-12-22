@@ -18,7 +18,7 @@
 > **⚠️ IMPORTANT: This tool works only for SINGLE-PLAYER mode!**  
 > Multiplayer is NOT supported. You cannot invite friends or join multiplayer sessions through Steam or the Paradox Launcher with the modified library.
 >
-> **🌐 Want to play ONLINE?** Use [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) on Windows instead — it supports multiplayer.
+> **🌐 Want to play ONLINE?** Use [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) instead — it supports multiplayer on all platforms (Windows, macOS, Linux).
 
 ---
 

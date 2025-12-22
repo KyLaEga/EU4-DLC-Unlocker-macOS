@@ -13,7 +13,7 @@
 > **⚠️ 重要：此工具仅适用于单人游戏模式！**  
 > 不支持多人游戏。使用修改后的库，您无法邀请好友或通过Steam或Paradox启动器加入多人游戏会话。
 >
-> **🌐 想要在线游戏？** 在Windows上使用 [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) — 它支持多人游戏。
+> **🌐 想要在线游戏？** 使用 [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) — 它支持所有平台（Windows、macOS、Linux）的多人游戏。
 
 
 > **本软件仅供教育目的使用。**  
