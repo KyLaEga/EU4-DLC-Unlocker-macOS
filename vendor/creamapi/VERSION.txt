@@ -1,0 +1,10 @@
+CreamAPI v5.3.0.0 (nonlog macOS build)
+
+Upstream: https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576
+Architectures: universal (x86_64 + arm64)
+
+File: libsteam_api.dylib
+SHA256: 13f49f08eaf3e4f48103173605793c8da1bcaa04bf6f4a3adbd0b29a6ef5c0d9
+
+VirusTotal (nonlog macOS): 0/64 detections
+https://www.virustotal.com/gui/file/13f49f08eaf3e4f48103173605793c8da1bcaa04bf6f4a3adbd0b29a6ef5c0d9/detection

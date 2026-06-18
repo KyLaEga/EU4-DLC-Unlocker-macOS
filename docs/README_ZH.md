@@ -1,5 +1,7 @@
 # EU4 DLC 解锁器 macOS版
 
+**版本 4.0 — 模块化引擎，CreamAPI v5.3.0.0，完整解锁 DLC，支持多人游戏**
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-macOS-blue.svg)](https://www.apple.com/macos/)
 [![Game](https://img.shields.io/badge/Game-Europa%20Universalis%20IV-red.svg)](https://store.steampowered.com/app/236850/)
@@ -8,140 +10,196 @@
 
 ---
 
-## ⚠️ 免责声明
+## ⚠️ 免责声明与法律提示
 
-> **⚠️ 重要：此工具仅适用于单人游戏模式！**  
-> 不支持多人游戏。使用修改后的库，您无法邀请好友或通过Steam或Paradox启动器加入多人游戏会话。
+> **仅供教育目的。使用风险自负。**
 >
-> **🌐 想要在线游戏？** 使用 [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) — 它支持所有平台（Windows、macOS、Linux）的多人游戏。
-
-
-> **本软件仅供教育目的使用。**  
-> 您必须在Steam上拥有Europa Universalis IV的正版副本才能使用此工具。  
-> 此工具不会下载任何DLC内容——它只解锁已存在于游戏文件中的DLC。  
-> **使用风险自负。** 作者不对任何后果负责。
+> - 您必须**在 Steam 上拥有 Europa Universalis IV 的正版副本**。本工具**不会下载**
+>   任何 DLC——它只是更改游戏中已存在文件的 DLC 的所有权状态。
+> - 使用 DLC 解锁器**违反 Steam 订阅者协议和 Paradox 的 EULA**。原则上这可能导致
+>   **VAC/账号封禁**。EU4 没有受 VAC 保护的服务器，因此实际风险较低，但**并非为零**——
+>   由您自行承担。
+> - 作者不对任何后果负责。如果您喜欢这款游戏，**请购买 DLC 以支持 Paradox Interactive。**
 
 ---
 
 ## 📖 描述
 
-这是一个用于**macOS**上**Europa Universalis IV**的DLC解锁器。它使用[Goldberg Steam模拟器](https://github.com/inflation/goldberg_emulator)来模拟Steam上合法购买游戏的DLC所有权。
+一个用于 **macOS** 上 **Europa Universalis IV** 的 DLC 解锁器。它使用
+[CreamAPI v5.3.0.0](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576)
+为在 Steam 上合法购买的游戏解锁 DLC 所有权。
 
 ### 工作原理
 
-该工具将原始的`libsteam_api.dylib`替换为修改版本，告诉游戏您拥有所有DLC。实际的DLC内容文件必须已经存在于您的游戏目录中。
+该工具将 CreamAPI 的 `libsteam_api.dylib`（位于真正 Steam 库之前的代理）安装到
+`eu4.app/Contents/Frameworks/`，将原始库备份为 `libsteam_api_o.dylib`，并写入一个
+`cream_api.ini`。启动时，游戏向 Steam 询问您拥有哪些 DLC，CreamAPI 对每个已解锁的
+DLC 回答“是”，同时将其他一切代理到真正的 Steam——因此**多人游戏仍可正常使用**。
+
+安装时，工具会**读取游戏自带的 `dlc/*.dlc` 元数据**并写入显式的 `[dlc]` 列表
+（`unlockall = false`）。这是有意为之：EU4 有 130 多个内容包，而 `unlockall = true`
+依赖 Steam 的*运行时* DLC 列表，对 DLC 众多的游戏该列表会**被截断**——于是只解锁一部分。
+由你自己的内容构建的列表是**完整的**，并且**离线也可用**。它在每次安装时重新生成。
+若未找到 DLC 元数据，则回退到 `unlockall = true`。
 
 ### 功能特点
 
-- ✅ 自动检测EU4安装路径
-- ✅ 自动备份原始文件
-- ✅ 简单的安装和卸载脚本
-- ✅ 支持外部驱动器和自定义安装路径
-- ✅ 配置中包含所有60多个EU4 DLC
+- ✅ **支持多人游戏**（CreamAPI 代理到真正的 Steam）
+- ✅ 完整 DLC 解锁——根据你自己的 `dlc/` 内容生成显式列表（不被截断、可离线），每次安装时重新生成
+- ✅ 自动检测 EU4 安装（内置磁盘**和**外部驱动器）
+- ✅ 安全备份原始文件；干净且可逆的卸载
+- ✅ 非修改性的 `status` 命令——显示已安装的内容
+- ✅ 经校验和验证的**通用**二进制（原生 Intel **与** Apple Silicon）
 
 ---
 
 ## 📋 系统要求
 
-- macOS 10.13或更高版本
-- Europa Universalis IV（在Steam上合法购买）
-- DLC内容文件（需单独获取）
+### 支持的平台
+
+| 平台         | 架构                  | 状态                    |
+|--------------|-----------------------|-------------------------|
+| macOS 10.13+ | Intel (x86_64)        | ✅ 原生                 |
+| macOS 11+    | Apple Silicon (M1–M4) | ✅ 原生 (arm64)         |
+
+随附的 `libsteam_api.dylib` 是一个**通用**（fat）二进制，同时包含 `x86_64` 和
+`arm64` 切片——在 Apple Silicon 上**无需 Rosetta 2**。
+
+### 前置条件
+
+- macOS 10.13（High Sierra）或更高版本
+- 在 Steam 上合法购买的 Europa Universalis IV
+- DLC **内容文件**（必须已存在——本工具不下载它们）
+- 建议安装 Xcode 命令行工具（`xcode-select --install`）以使用 `codesign`/`xattr`
 
 ---
 
 ## 🚀 安装
 
-### 方法1：使用安装脚本（推荐）
-
-1. **下载**此仓库或克隆它：
+1. **克隆或下载**仓库：
    ```bash
-   git clone https://github.com/YOUR_USERNAME/EU4-DLC-Unlocker-macOS.git
-   ```
-
-2. **打开终端**并导航到文件夹：
-   ```bash
+   git clone https://github.com/KyLaEga/EU4-DLC-Unlocker-macOS.git
    cd EU4-DLC-Unlocker-macOS
    ```
 
-3. **运行安装程序：**
+2. **运行安装程序：**
    ```bash
    ./install_dlc_unlocker.sh
    ```
+   这是 `./bin/unlocker install eu4` 的轻量封装。该工具会验证随附库、自动检测
+   EU4 安装、备份原始库、安装 CreamAPI，并为 Gatekeeper 重新签名结果。
 
-4. 当提示时**输入路径**到您的EU4安装位置。
+3. **通过 Steam 启动 EU4**（首次请保持在线，以便解析 DLC）。
 
-5. 通过Steam**启动游戏**。
+如果游戏位于不常见的位置，请直接指定路径：
+```bash
+./bin/unlocker install eu4 --path "/Volumes/My Drive/SteamLibrary/steamapps/common/Europa Universalis IV"
+```
 
-### 方法2：手动安装
+---
 
-1. **找到您的EU4安装位置。** 常见位置：
-   - `/Users/您的用户名/Library/Application Support/Steam/steamapps/common/Europa Universalis IV`
-   - `/Volumes/您的驱动器/SteamLibrary/steamapps/common/Europa Universalis IV`
+## 🛠️ 用法（`unlocker` 命令行）
 
-2. **找到`libsteam_api.dylib`：**
-   ```bash
-   find "/路径/到/Europa Universalis IV" -name "libsteam_api.dylib"
-   ```
-   通常位于：`eu4.app/Contents/Frameworks/`
+唯一入口是 `bin/unlocker`；两个 `*_dlc_unlocker.sh` 是为向后兼容而保留的轻量封装。
 
-3. **备份原始文件：**
-   ```bash
-   cp "/路径/到/libsteam_api.dylib" "/路径/到/libsteam_api.dylib.backup"
-   ```
+```text
+./bin/unlocker install   [eu4]   # 备份原始库 + 安装 CreamAPI
+./bin/unlocker uninstall [eu4]   # 恢复原始库
+./bin/unlocker status    [eu4]   # 不修改：补丁 / 备份 / 完整性
+./bin/unlocker --help
+./bin/unlocker --version
 
-4. **复制修改后的库：**
-   ```bash
-   cp libsteam_api.dylib "/路径/到/eu4.app/Contents/Frameworks/"
-   ```
+选项（命令之后）：
+  --yes          非交互式；默认回答“是”。
+  --path DIR     使用此游戏目录，而非自动检测。
+```
 
-5. **复制steam_settings文件夹：**
-   ```bash
-   cp -r steam_settings "/路径/到/eu4.app/Contents/Frameworks/"
-   cp steam_settings/steam_appid.txt "/路径/到/eu4.app/Contents/Frameworks/"
-   ```
+在不更改任何内容的情况下检查状态：
+```bash
+./bin/unlocker status eu4
+```
 
 ---
 
 ## 🗑️ 卸载
 
-运行卸载脚本：
 ```bash
 ./uninstall_dlc_unlocker.sh
+# 或：./bin/unlocker uninstall eu4
 ```
 
-或手动恢复备份：
-```bash
-cp "/路径/到/libsteam_api.dylib.backup" "/路径/到/libsteam_api.dylib"
-```
+从备份恢复 `libsteam_api.dylib`，删除 `cream_api.ini`，重新签名原始库，并清理遗留文件。
+
+> Steam 的**“验证游戏文件完整性”**会悄悄恢复原始库并移除补丁——这是正常的。
+> 重新运行安装程序，或运行 `status` 检查当前状态。
 
 ---
 
 ## ❓ 常见问题
 
-### DLC在启动器中显示警告图标
+### DLC 在启动器中显示警告图标
+缺少 DLC 的**内容文件**。本工具只更改所有权状态——实际内容必须位于游戏的 `dlc/` 文件夹中。
 
-这意味着DLC内容文件缺失。解锁器只告诉游戏您"拥有"DLC——实际的内容文件必须存在于`dlc/`文件夹中。
+### 在哪里获取 DLC 内容文件？
+Paradox 的 DLC 内容是跨平台的。如果您有来自 Windows/Linux 安装的文件，
+只需将 `dlc/` 文件夹的内容复制到您的 Mac 安装中。
 
-### 在哪里获取DLC文件？
-
-Paradox游戏的DLC文件是跨平台的（Windows/Mac/Linux）。如果您有Windows安装的文件，只需将`dlc/`文件夹的内容复制到您的Mac安装中。
+### Steam“验证完整性”还原了我的补丁
+这是正常的——Steam 用原始库替换了我们的库。运行
+`./bin/unlocker status eu4` 检查，然后重新安装。
 
 ### 游戏无法启动
+macOS Gatekeeper 可能会阻止修改后的库。安装程序已移除隔离属性并对 dylib 进行
+ad-hoc 重新签名；如果您是手动复制文件：
+```bash
+xattr -dr com.apple.quarantine "/路径/到/eu4.app"
+codesign --force -s - "/路径/到/eu4.app/Contents/Frameworks/libsteam_api.dylib"
+```
+如果缺少 `codesign`/`xattr`，请先安装命令行工具：
+`xcode-select --install`。仍无法解决？请卸载后重试。
 
-1. 尝试通过Steam验证游戏文件
-2. 确保使用适合您macOS版本的正确`libsteam_api.dylib`
-3. 运行卸载程序并重试
+### 随附的库安全吗？
+随附的 `libsteam_api.dylib` 与官方 CreamAPI *nonlog* macOS 构建逐字节相同，
+在 **VirusTotal 上为 0/64**。您可以自行重新校验——参见
+[docs/SECURITY.md](SECURITY.md) 和
+[vendor/creamapi/VERSION.txt](../vendor/creamapi/VERSION.txt)。（注意：该二进制的
+install-name 中嵌入了上游构建路径；这无害，且正是本工具用来检测已安装补丁的依据。）
+
+### 会解锁哪些 DLC？
+**`dlc/` 文件夹中存在内容的所有 DLC。** 安装程序读取每个 `dlc/*.dlc` 文件，收集其
+Steam appid，并将完整集合写入 `cream_api.ini` 的 `[dlc]` 段。添加了新内容？重新运行
+安装程序，列表会重新生成。（我们刻意不用 `unlockall = true`——Steam 的运行时列表对 EU4
+会被截断，只能解锁一部分。`status eu4` 会显示当前配置覆盖了多少个 DLC。）
+
+### 为什么 `status` 显示的 DLC 比我的文件夹少？
+这是正常的，没有遗漏。`dlc/` 文件夹存放的是**内容包**（完整游戏共 134 个），但 Steam
+把它们作为更少的**购买项**出售——一次购买常常捆绑多个包（一个扩展 + 其兵种包 + 其音乐包
+共用一个 Steam appid）。本工具**按 Steam appid** 授予所有权，因此约 75 个 appid 即可
+覆盖全部 134 个包。`status` 显示 appid 的数量；启动器会显示它们解锁的所有包。
+
+### 我能解锁其他 Paradox 游戏吗？
+引擎与具体游戏无关。例如要支持 CK3，只需新增一个 `games/<game>.conf`
+（appid + 搜索路径）——无需更改代码。目前只随附 EU4；
+参见 [docs/CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ---
+
+## 🔐 安全性与完整性
+
+如果随附 dylib 的 SHA256 与 `vendor/creamapi/VERSION.txt` 不匹配，安装程序将拒绝
+运行（防篡改/防损坏保护），并且 CI 在每次推送时都会重新验证。参见
+[docs/SECURITY.md](SECURITY.md)。
 
 ## 🙏 致谢
 
-- [Goldberg Steam模拟器](https://github.com/Mr_Goldberg/goldberg_emulator) 作者：Mr_Goldberg
-- [macOS构建版本](https://github.com/inflation/goldberg_emulator) 作者：inflation
-- 灵感来自[CreamInstaller](https://github.com/pointfeev/CreamInstaller)
-
----
+- [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) — DLC 解锁库
+- 灵感来自 [CreamInstaller](https://github.com/pointfeev/CreamInstaller)
 
 ## 📜 许可证
 
-本项目采用MIT许可证 - 详见[LICENSE](../LICENSE)文件。
+采用 MIT 许可证 — 详见 [LICENSE](../LICENSE)。
+
+## ⭐ 支持
+
+如果它帮到了您：⭐ 为仓库点星，🐛 报告问题，💡 提出改进建议。
+**如果您喜欢 EU4 及其 DLC，请购买它们以支持 Paradox Interactive。**

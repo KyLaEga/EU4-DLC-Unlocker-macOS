@@ -1,0 +1,39 @@
+name: Link check
+
+on:
+  push:
+    paths:
+      - "**.md"
+      - ".github/workflows/links.yml"
+  pull_request:
+    paths:
+      - "**.md"
+      - ".github/workflows/links.yml"
+  workflow_dispatch:
+  schedule:
+    # Weekly, to catch external links that rot over time.
+    - cron: "0 6 * * 1"
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Markdown links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Verify all relative links (the main risk in our docs). Some external
+          # hosts block CI bots, so we exclude them to avoid false failures;
+          # 429/403/timeouts are not treated as broken.
+          args: >-
+            --no-progress
+            --accept 200,206,429,403
+            --max-retries 2
+            --timeout 20
+            --exclude-path docs/superpowers
+            --exclude "cs\.rin\.ru"
+            --exclude "virustotal\.com"
+            --exclude "img\.shields\.io"
+            "**/*.md"
+          fail: true

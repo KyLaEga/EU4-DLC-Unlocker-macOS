@@ -4,9 +4,10 @@
 .LSOverride
 ._*
 
-# Backup files
+# Backup files (game-side backups created by the installer)
 *.backup
 *.bak
+libsteam_api_o.dylib
 
 # Logs
 *.log
@@ -14,3 +15,12 @@
 # Temporary files
 *.tmp
 *.temp
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Claude Code session data
+.claude/

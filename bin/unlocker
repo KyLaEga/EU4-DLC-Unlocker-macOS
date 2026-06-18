@@ -1,0 +1,118 @@
+#!/bin/bash
+# shellcheck shell=bash disable=SC1091,SC2034
+# ============================================
+# EU4 DLC Unlocker — single CLI entrypoint (v4.0)
+#
+# Usage:
+#   ./unlocker install   [game]   # apply the CreamAPI patch (default game: eu4)
+#   ./unlocker uninstall [game]   # restore the original library
+#   ./unlocker status    [game]   # non-mutating diagnostic
+#   ./unlocker --help
+#   ./unlocker --version
+#
+# Flags (after the subcommand):
+#   --yes            non-interactive (answer yes to confirmations)
+#   --path <dir>     override the game search path
+# ============================================
+
+set -euo pipefail
+
+# Resolve our own location (works regardless of CWD).
+SELF="$0"
+SELF_DIR="$(cd "$(dirname "$SELF")" && pwd)"
+LIB_DIR="$SELF_DIR/lib"
+
+UNLOCKER_VERSION="4.0"
+
+usage() {
+    cat <<EOF
+EU4 DLC Unlocker v${UNLOCKER_VERSION} (CreamAPI 5.3.0.0)
+
+Usage:
+  unlocker <command> [game] [options]
+
+Commands:
+  install     Back up the original library and apply the CreamAPI patch.
+  uninstall   Restore the original library from the backup.
+  status      Show patch/backup/integrity state (does not change anything).
+
+Game:
+  eu4         Europa Universalis IV (default; only game shipped).
+
+Options:
+  --yes       Non-interactive; assume "yes" to confirmations.
+  --path DIR  Override the automatic game search with this directory.
+  --help      Show this help.
+  --version   Show version.
+
+Examples:
+  ./unlocker install
+  ./unlocker status eu4
+  ./unlocker uninstall eu4 --yes
+  ./unlocker install eu4 --path "/Volumes/My Book/SteamLibrary/steamapps/common/Europa Universalis IV"
+EOF
+}
+
+# Source libraries.
+# shellcheck source=lib/common.sh
+. "$LIB_DIR/common.sh"
+# shellcheck source=lib/install.sh
+. "$LIB_DIR/install.sh"
+# shellcheck source=lib/uninstall.sh
+. "$LIB_DIR/uninstall.sh"
+# shellcheck source=lib/status.sh
+. "$LIB_DIR/status.sh"
+
+# ---- arg parsing ----
+[ "$#" -ge 1 ] || { usage; exit 1; }
+
+COMMAND=""
+GAME_ID="eu4"
+OPT_YES=0
+OPT_PATH=""
+
+while [ "$#" -ge 1 ]; do
+    case "$1" in
+        install|uninstall|status)
+            COMMAND="$1"
+            shift
+            # First non-flag arg after the command is the game id.
+            if [ "$#" -ge 1 ] && [[ "$1" != --* ]]; then
+                GAME_ID="$1"
+                shift
+            fi
+            ;;
+        --yes|-y)
+            OPT_YES=1
+            shift
+            ;;
+        --path)
+            [ "$#" -ge 2 ] || { out_err "--path requires a value"; usage; exit 1; }
+            OPT_PATH="$2"
+            shift 2
+            ;;
+        --help|-h)
+            usage
+            exit 0
+            ;;
+        --version|-V)
+            echo "unlocker v${UNLOCKER_VERSION} (CreamAPI 5.3.0.0)"
+            exit 0
+            ;;
+        *)
+            out_err "Unknown argument: $1"
+            usage
+            exit 1
+            ;;
+    esac
+done
+
+[ -n "$COMMAND" ] || { usage; exit 1; }
+
+out_title "EU4 DLC Unlocker v${UNLOCKER_VERSION}"
+
+case "$COMMAND" in
+    install)   install_run ;;
+    uninstall) uninstall_run ;;
+    status)    status_run ;;
+esac

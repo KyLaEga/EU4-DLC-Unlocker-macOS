@@ -1,0 +1,46 @@
+name: Verify dylib integrity
+
+on:
+  push:
+    paths:
+      - "vendor/creamapi/**"
+      - ".github/workflows/verify-dylib.yml"
+  pull_request:
+    paths:
+      - "vendor/creamapi/**"
+      - ".github/workflows/verify-dylib.yml"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assert committed dylib matches the pinned SHA256
+        run: |
+          set -euo pipefail
+          dylib="vendor/creamapi/libsteam_api.dylib"
+          sha_file="vendor/creamapi/libsteam_api.dylib.sha256"
+
+          test -f "$dylib"    || { echo "::error::missing $dylib"; exit 1; }
+          test -f "$sha_file" || { echo "::error::missing $sha_file"; exit 1; }
+
+          expected="$(tr -d '[:space:]' < "$sha_file")"
+          actual="$(sha256sum "$dylib" | awk '{print $1}')"
+
+          echo "expected: $expected"
+          echo "actual:   $actual"
+
+          if [ "$expected" != "$actual" ]; then
+            echo "::error::dylib SHA256 mismatch — corruption or tampering."
+            exit 1
+          fi
+
+          # VERSION.txt must also reference the same hash.
+          if ! grep -qi "$expected" vendor/creamapi/VERSION.txt; then
+            echo "::error::VERSION.txt does not reference the expected SHA256."
+            exit 1
+          fi
+
+          echo "dylib integrity verified."
