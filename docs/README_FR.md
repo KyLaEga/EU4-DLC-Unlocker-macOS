@@ -215,7 +215,7 @@ altération/corruption), et la CI le revérifie à chaque push. Voir
 ## 🙏 Remerciements
 
 - [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) — la bibliothèque de déblocage de DLC
-- Inspiré par [CreamInstaller](https://github.com/pointfeev/CreamInstaller)
+- Inspiré par CreamInstaller (repo no longer available)
 
 ## 📜 Licence
 

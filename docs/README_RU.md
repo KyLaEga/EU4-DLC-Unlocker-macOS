@@ -289,7 +289,7 @@ Steam для EU4 обрезан и разблокировал бы лишь ча
 ## 🙏 Благодарности
 
 - [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) — библиотека разблокировки DLC
-- Вдохновлено [CreamInstaller](https://github.com/pointfeev/CreamInstaller)
+- Вдохновлено CreamInstaller (repo no longer available)
 
 ## 📜 Лицензия
 

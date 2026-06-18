@@ -214,7 +214,7 @@ CI lo vuelve a verificar en cada push. Ver [docs/SECURITY.md](SECURITY.md).
 ## 🙏 Créditos
 
 - [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) — la biblioteca de desbloqueo de DLC
-- Inspirado en [CreamInstaller](https://github.com/pointfeev/CreamInstaller)
+- Inspirado en CreamInstaller (repo no longer available)
 
 ## 📜 Licencia
 

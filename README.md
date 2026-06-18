@@ -293,7 +293,7 @@ on every push. See [docs/SECURITY.md](docs/SECURITY.md).
 ## 🙏 Credits
 
 - [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) — the DLC unlocker library
-- Inspired by [CreamInstaller](https://github.com/pointfeev/CreamInstaller)
+- Inspired by CreamInstaller (repo no longer available)
 
 ## 📜 License
 

@@ -213,7 +213,7 @@ und CI prüft das bei jedem Push erneut. Siehe [docs/SECURITY.md](SECURITY.md).
 ## 🙏 Danksagungen
 
 - [CreamAPI](https://cs.rin.ru/forum/viewtopic.php?f=29&t=70576) — die DLC-Unlocker-Bibliothek
-- Inspiriert von [CreamInstaller](https://github.com/pointfeev/CreamInstaller)
+- Inspiriert von CreamInstaller (repo no longer available)
 
 ## 📜 Lizenz
 
