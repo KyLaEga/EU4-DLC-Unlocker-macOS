@@ -1,6 +1,6 @@
 # EU4 DLC Unlocker für macOS
 
-**Version 4.0 — modulare Engine, CreamAPI v5.3.0.0, vollständige DLC-Freischaltung, Multiplayer unterstützt**
+**Version 4.0.1 — modulare Engine, CreamAPI v5.3.0.0, vollständige DLC-Freischaltung, Multiplayer unterstützt**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-macOS-blue.svg)](https://www.apple.com/macos/)
@@ -84,26 +84,62 @@ beiden Slices `x86_64` und `arm64` — **kein Rosetta 2 auf Apple Silicon nötig
 
 ## 🚀 Installation
 
-1. **Repository klonen oder herunterladen:**
+**Kurzfassung** — drei Befehle, dann das Spiel starten:
+
+```bash
+git clone https://github.com/KyLaEga/EU4-DLC-Unlocker-macOS.git
+cd EU4-DLC-Unlocker-macOS
+./install_dlc_unlocker.sh
+```
+
+### Schritt für Schritt
+
+1. **Stellen Sie zuerst sicher, dass der DLC-Inhalt vorhanden ist.** Der
+   `dlc/`-Ordner des Spiels muss die DLC-Pakete bereits enthalten (das Tool
+   schaltet den Besitz frei, es **lädt keine** Inhalte herunter). Ist der Ordner
+   leer, siehe [Wo bekomme ich die DLC-Inhaltsdateien?](#wo-bekomme-ich-die-dlc-inhaltsdateien) unten.
+
+2. **Repository klonen oder herunterladen:**
    ```bash
    git clone https://github.com/KyLaEga/EU4-DLC-Unlocker-macOS.git
    cd EU4-DLC-Unlocker-macOS
    ```
 
-2. **Installer ausführen:**
+3. **Installer ausführen:**
    ```bash
    ./install_dlc_unlocker.sh
    ```
    Ein dünner Wrapper um `./bin/unlocker install eu4`. Das Tool verifiziert die
-   mitgelieferte Bibliothek, erkennt die EU4-Installation, sichert das Original,
-   installiert CreamAPI und signiert das Ergebnis für Gatekeeper neu.
+   mitgelieferte Bibliothek, erkennt die EU4-Installation (interne **und**
+   externe Laufwerke), sichert das Original als `libsteam_api_o.dylib`,
+   installiert CreamAPI, baut die explizite DLC-Liste aus Ihrem `dlc/`-Inhalt
+   und signiert das Ergebnis ad-hoc für Gatekeeper neu.
 
-3. **EU4 über Steam starten** (beim ersten Mal online, damit die DLC aufgelöst werden).
+   Liegt das Spiel an einem ungewöhnlichen Ort, geben Sie den Pfad direkt an:
+   ```bash
+   ./bin/unlocker install eu4 --path "/Volumes/My Drive/SteamLibrary/steamapps/common/Europa Universalis IV"
+   ```
 
-Liegt das Spiel an einem ungewöhnlichen Ort, geben Sie den Pfad direkt an:
+4. **EU4 über Steam starten.** Mit der expliziten `[dlc]`-Liste funktioniert das
+   auch offline. **Wichtig:** War das Spiel oder der Paradox-Launcher bereits
+   offen, **beenden Sie es vollständig (`⌘Q`)** und starten Sie neu — CreamAPI
+   liest `cream_api.ini` nur einmal beim Prozessstart.
+
+### Überprüfen
+
+Den Patch-Zustand prüfen, ohne etwas zu ändern:
 ```bash
-./bin/unlocker install eu4 --path "/Volumes/My Drive/SteamLibrary/steamapps/common/Europa Universalis IV"
+./bin/unlocker status eu4
 ```
+Erwartet wird:
+```
+[+] Patch state:     INSTALLED (CreamAPI active)
+[+] Original backup: PRESENT (...libsteam_api_o.dylib)
+[+] cream_api.ini:   PRESENT
+[*]   unlockall = false; explicit [dlc] list (N DLC)
+```
+Öffnen Sie dann den **DLC-Tab** im Paradox-Launcher — jedes DLC, dessen Inhalt
+vorhanden ist, sollte nun im Besitz sein (keine „Buy“-Buttons, keine Warnsymbole).
 
 ---
 
@@ -128,6 +164,25 @@ Status ohne Änderung prüfen:
 ```bash
 ./bin/unlocker status eu4
 ```
+
+### Was `install` im Hintergrund macht
+
+1. **Integritätsprüfung** — läuft nur, wenn die mitgelieferte
+   `libsteam_api.dylib` zum festgeschriebenen SHA256 passt (Manipulationsschutz).
+2. **Spiel finden** — expandiert die Suchpfade aus `games/eu4.conf` (mit
+   Leerzeichen und externen `/Volumes/*`-Laufwerken); oder nutzt `--path`.
+3. **Sicherung** des Originals als `libsteam_api_o.dylib` (überschreibt keine
+   vorhandene gute Sicherung).
+4. **CreamAPI installieren** — kopiert die Proxy-dylib und prüft den Hash der
+   Kopie vor dem Neusignieren.
+5. **`cream_api.ini` bauen** — scannt `dlc/*/*.dlc`, sammelt jede `steam_id`,
+   entfernt Duplikate und schreibt eine explizite `[dlc]`-Liste mit
+   `unlockall = false`.
+6. **macOS-Härtung** — entfernt das Quarantäne-Attribut (`xattr`) und signiert
+   die dylib ad-hoc neu (`codesign -s -`), damit Gatekeeper sie lädt.
+
+`uninstall` macht die Schritte 3–4 rückgängig (Sicherung wiederherstellen,
+`cream_api.ini` löschen, neu signieren). `status` zeigt all dies und ändert nichts.
 
 ---
 
@@ -154,9 +209,33 @@ Die DLC-**Inhaltsdateien** fehlen. Der Unlocker ändert nur den Besitzstatus —
 der eigentliche Inhalt muss im `dlc/`-Ordner des Spiels liegen.
 
 ### Wo bekomme ich die DLC-Inhaltsdateien?
-Paradox-DLC-Inhalte sind plattformübergreifend. Wenn Sie sie von einer
-Windows-/Linux-Installation haben, kopieren Sie den Inhalt des `dlc/`-Ordners
-in Ihre Mac-Installation.
+Dieses Tool **verteilt und lädt keine** DLC — Sie bringen Ihre eigenen mit.
+Paradox-DLC-Inhalte sind plattformübergreifend, also kopieren Sie üblicherweise
+den **`dlc/`-Ordner von einem Rechner, auf dem Sie ihn bereits haben** (z. B.
+eine Ihnen gehörende Windows-/Linux-Installation) in Ihre Mac-Installation unter:
+```
+.../steamapps/common/Europa Universalis IV/dlc/
+```
+Jedes DLC liegt in einem eigenen Unterordner (`dlc/dlcNNN_name/`) mit
+`.dlc`-Metadatei, `.zip` und Thumbnail. Führen Sie danach den Installer (erneut)
+aus, damit die `[dlc]`-Liste aus dem neuen Inhalt neu gebaut wird.
+
+**Inhalt als mehrteiliges Archiv erhalten (`*.zip.001`, `*.zip.002`, …)?**
+Diese Teile sind **ein** in Stücke geteiltes Archiv — keine separaten Zips.
+Zusammenfügen und auf macOS so entpacken (nicht jeden Teil einzeln entpacken):
+```bash
+# 7-Zip kann das oft genutzte LZMA und liest alle Teile automatisch, wenn man
+# auf den ersten zeigt:
+brew install sevenzip
+7zz x "DLC-….zip.001" -o"/Pfad/zu/Europa Universalis IV"   # schreibt den dlc/-Baum
+
+# Alternativ die Teile zuerst zu einer Datei zusammenfügen (Reihenfolge wichtig):
+cat DLC-….zip.00{1,2,3,4} > DLC-….zip
+7zz x DLC-….zip -o"/Pfad/zu/Europa Universalis IV"
+```
+Richten Sie `-o` auf den Spielordner (das übergeordnete Verzeichnis von `dlc/`) —
+das Archiv enthält bereits ein oberstes `dlc/`, das so an Ort und Stelle gemerged
+wird.
 
 ### Steam „Spieldateien überprüfen“ hat meinen Patch zurückgesetzt
 Normal — Steam hat unsere Bibliothek durch das Original ersetzt. Prüfen Sie mit

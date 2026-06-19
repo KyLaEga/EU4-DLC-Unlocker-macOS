@@ -22,7 +22,7 @@ SELF="$0"
 SELF_DIR="$(cd "$(dirname "$SELF")" && pwd)"
 LIB_DIR="$SELF_DIR/lib"
 
-UNLOCKER_VERSION="4.0"
+UNLOCKER_VERSION="4.0.1"
 
 usage() {
     cat <<EOF

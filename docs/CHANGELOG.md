@@ -3,6 +3,22 @@
 All notable changes to this project are documented here.
 The format is loosely based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [4.0.1] — 2026-06-19
+
+Documentation and packaging follow-up to 4.0. No behavior change in the engine.
+
+### Changed
+- All six READMEs (EN/RU/DE/FR/ES/ZH) brought to full parity: TL;DR, step-by-step
+  install, a "Verify it worked" section, an "under the hood" breakdown of the
+  install pipeline, a macOS split-archive (`*.zip.001`) join/extract how-to, and
+  a "purchases vs content packs" FAQ explaining why the DLC count (appids) is
+  lower than the number of `dlc/` folders.
+- `--version` now reports `4.0.1`.
+
+### Fixed
+- Dropped the dead `pointfeev/CreamInstaller` credit link — the repo now returns
+  HTTP 451 (Unavailable For Legal Reasons), which failed the link-check CI.
+
 ## [4.0] — 2026-06
 
 Modular rewrite. The two monolithic scripts are replaced by a small,

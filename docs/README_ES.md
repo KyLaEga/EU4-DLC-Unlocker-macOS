@@ -1,6 +1,6 @@
 # EU4 DLC Unlocker para macOS
 
-**Versión 4.0 — motor modular, CreamAPI v5.3.0.0, desbloqueo completo de DLC, multijugador compatible**
+**Versión 4.0.1 — motor modular, CreamAPI v5.3.0.0, desbloqueo completo de DLC, multijugador compatible**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-macOS-blue.svg)](https://www.apple.com/macos/)
@@ -84,26 +84,62 @@ porciones `x86_64` y `arm64` — **no requiere Rosetta 2** en Apple Silicon.
 
 ## 🚀 Instalación
 
-1. **Clona o descarga** el repositorio:
+**Resumen** — tres comandos, luego inicia el juego:
+
+```bash
+git clone https://github.com/KyLaEga/EU4-DLC-Unlocker-macOS.git
+cd EU4-DLC-Unlocker-macOS
+./install_dlc_unlocker.sh
+```
+
+### Paso a paso
+
+1. **Asegúrate primero de que el contenido DLC esté en su sitio.** La carpeta
+   `dlc/` del juego ya debe contener los paquetes de DLC (esta herramienta
+   desbloquea la propiedad, **no descarga** contenido). Si está vacía, mira
+   [¿Dónde obtengo los archivos de contenido DLC?](#dónde-obtengo-los-archivos-de-contenido-dlc) abajo.
+
+2. **Clona o descarga** el repositorio:
    ```bash
    git clone https://github.com/KyLaEga/EU4-DLC-Unlocker-macOS.git
    cd EU4-DLC-Unlocker-macOS
    ```
 
-2. **Ejecuta el instalador:**
+3. **Ejecuta el instalador:**
    ```bash
    ./install_dlc_unlocker.sh
    ```
    Una fina envoltura sobre `./bin/unlocker install eu4`. La herramienta
-   verifica la biblioteca incluida, detecta la instalación de EU4, guarda el
-   original, instala CreamAPI y vuelve a firmar el resultado para Gatekeeper.
+   verifica la biblioteca incluida, detecta la instalación de EU4 (disco interno
+   **y** unidades externas), guarda el original como `libsteam_api_o.dylib`,
+   instala CreamAPI, construye la lista explícita de DLC a partir de tu `dlc/` y
+   vuelve a firmar el resultado en ad-hoc para Gatekeeper.
 
-3. **Inicia EU4 a través de Steam** (en línea la primera vez para resolver los DLC).
+   Si el juego está en una ubicación inusual, indica la ruta directamente:
+   ```bash
+   ./bin/unlocker install eu4 --path "/Volumes/My Drive/SteamLibrary/steamapps/common/Europa Universalis IV"
+   ```
 
-Si el juego está en una ubicación inusual, indica la ruta directamente:
+4. **Inicia EU4 a través de Steam.** Con la lista `[dlc]` explícita esto también
+   funciona sin conexión. **Importante:** si el juego o el Paradox Launcher ya
+   estaban abiertos, **ciérralos por completo (`⌘Q`)** y reinicia — CreamAPI lee
+   `cream_api.ini` solo una vez al iniciar el proceso.
+
+### Verificar
+
+Comprueba el estado del parche sin cambiar nada:
 ```bash
-./bin/unlocker install eu4 --path "/Volumes/My Drive/SteamLibrary/steamapps/common/Europa Universalis IV"
+./bin/unlocker status eu4
 ```
+Deberías ver:
+```
+[+] Patch state:     INSTALLED (CreamAPI active)
+[+] Original backup: PRESENT (...libsteam_api_o.dylib)
+[+] cream_api.ini:   PRESENT
+[*]   unlockall = false; explicit [dlc] list (N DLC)
+```
+Luego abre la pestaña **DLC** en el Paradox Launcher — cada DLC cuyo contenido
+esté presente debería aparecer como propio (sin botones «Buy», sin advertencias).
 
 ---
 
@@ -128,6 +164,24 @@ Comprobar el estado sin cambiar nada:
 ```bash
 ./bin/unlocker status eu4
 ```
+
+### Qué hace `install` por dentro
+
+1. **Control de integridad** — no se ejecuta salvo que la `libsteam_api.dylib`
+   incluida coincida con el SHA256 fijado (protección contra manipulación).
+2. **Localizar el juego** — expande las rutas de `games/eu4.conf` (con espacios y
+   unidades externas `/Volumes/*`); o usa `--path`.
+3. **Copia de seguridad** del original como `libsteam_api_o.dylib` (no sobrescribe
+   una copia buena existente).
+4. **Instalar CreamAPI** — copia la dylib proxy y vuelve a comprobar el hash de
+   la copia antes de firmar.
+5. **Construir `cream_api.ini`** — escanea `dlc/*/*.dlc`, recoge cada `steam_id`,
+   elimina duplicados y escribe una lista `[dlc]` explícita con `unlockall = false`.
+6. **Endurecimiento macOS** — quita el atributo de cuarentena (`xattr`) y vuelve a
+   firmar la dylib en ad-hoc (`codesign -s -`) para que Gatekeeper la cargue.
+
+`uninstall` revierte los pasos 3–4 (restaurar la copia, borrar `cream_api.ini`,
+volver a firmar). `status` informa de todo esto y no cambia nada.
 
 ---
 
@@ -154,8 +208,32 @@ Faltan los **archivos de contenido** DLC. La herramienta solo cambia el estado
 de propiedad — el contenido debe estar en la carpeta `dlc/` del juego.
 
 ### ¿Dónde obtengo los archivos de contenido DLC?
-El contenido DLC de Paradox es multiplataforma. Si lo tienes de una instalación
-Windows/Linux, copia el contenido de la carpeta `dlc/` a tu instalación de Mac.
+Esta herramienta **no distribuye ni descarga** DLC — tú aportas el tuyo. El
+contenido DLC de Paradox es multiplataforma, así que lo habitual es **copiar la
+carpeta `dlc/` desde una máquina donde ya lo tengas** (p. ej. una instalación
+Windows/Linux tuya) a tu instalación de Mac en:
+```
+.../steamapps/common/Europa Universalis IV/dlc/
+```
+Cada DLC vive en su propia subcarpeta (`dlc/dlcNNN_name/`) con un archivo de
+metadatos `.dlc`, un `.zip` y una miniatura. Después de copiar, ejecuta (o vuelve
+a ejecutar) el instalador para que la lista `[dlc]` se reconstruya.
+
+**¿Recibiste el contenido como un archivo multiparte (`*.zip.001`, `*.zip.002`, …)?**
+Esas partes son **un** archivo dividido en trozos, no zips separados. Únelas y
+extráelas en macOS así (no extraigas cada parte por separado):
+```bash
+# 7-Zip admite el LZMA que suelen usar los paquetes de EU4 y lee todas las partes
+# automáticamente si apuntas a la primera:
+brew install sevenzip
+7zz x "DLC-….zip.001" -o"/ruta/a/Europa Universalis IV"   # escribe el árbol dlc/
+
+# Alternativa: concatena primero las partes en un solo archivo (el orden importa):
+cat DLC-….zip.00{1,2,3,4} > DLC-….zip
+7zz x DLC-….zip -o"/ruta/a/Europa Universalis IV"
+```
+Apunta `-o` a la carpeta del juego (el padre de `dlc/`) — el archivo ya contiene
+un `dlc/` de nivel superior, así que al extraer ahí se fusiona en su sitio.
 
 ### «Verificar integridad» de Steam revirtió mi parche
 Es normal — Steam reemplazó nuestra biblioteca por la original. Comprueba con
