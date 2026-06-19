@@ -1,6 +1,6 @@
 # EU4 DLC Unlocker for macOS
 
-**Version 4.0.2 — modular engine, CreamAPI v5.3.0.0, complete DLC unlock, multiplayer supported**
+**Version 4.0.3 — modular engine, CreamAPI v5.3.0.0, complete DLC unlock, multiplayer supported**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-macOS-blue.svg)](https://www.apple.com/macos/)
@@ -211,6 +211,9 @@ The DLC **content files** are missing. The unlocker only changes ownership
 state — the actual content must be present in the game's `dlc/` folder.
 
 ### Where do I get the DLC content files?
+
+> 📖 **Full step-by-step guide** (transferring `dlc/`, joining split archives, troubleshooting): **[docs/DLC-CONTENT.md](docs/DLC-CONTENT.md)**.
+
 This tool does **not** distribute or download DLC — you bring your own. Paradox
 DLC content is cross-platform, so the usual route is to **copy the `dlc/`
 folder from a machine where you already have it** (e.g. a Windows or Linux

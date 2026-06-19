@@ -1,6 +1,6 @@
 # EU4 DLC 解锁器 macOS版
 
-**版本 4.0.2 — 模块化引擎，CreamAPI v5.3.0.0，完整解锁 DLC，支持多人游戏**
+**版本 4.0.3 — 模块化引擎，CreamAPI v5.3.0.0，完整解锁 DLC，支持多人游戏**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-macOS-blue.svg)](https://www.apple.com/macos/)
@@ -191,6 +191,9 @@ cd EU4-DLC-Unlocker-macOS
 缺少 DLC 的**内容文件**。本工具只更改所有权状态——实际内容必须位于游戏的 `dlc/` 文件夹中。
 
 ### 在哪里获取 DLC 内容文件？
+
+> 📖 **完整分步指南**（转移 `dlc/`、合并分卷压缩包、故障排查）：**[docs/DLC-CONTENT.md](DLC-CONTENT.md)**（英文）。
+
 本工具**不分发也不下载** DLC——内容由你自备。Paradox 的 DLC 内容是跨平台的，
 因此通常的做法是**从你已经拥有的机器上复制 `dlc/` 文件夹**（例如你自己的
 Windows/Linux 安装）到你的 Mac 安装中：

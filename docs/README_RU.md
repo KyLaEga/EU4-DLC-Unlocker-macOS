@@ -1,6 +1,6 @@
 # EU4 DLC Unlocker для macOS
 
-**Версия 4.0.2 — модульный движок, CreamAPI v5.3.0.0, полная разблокировка DLC, мультиплеер поддерживается**
+**Версия 4.0.3 — модульный движок, CreamAPI v5.3.0.0, полная разблокировка DLC, мультиплеер поддерживается**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-macOS-blue.svg)](https://www.apple.com/macos/)
@@ -207,6 +207,9 @@ cd EU4-DLC-Unlocker-macOS
 сам контент должен лежать в папке `dlc/` игры.
 
 ### Где взять файлы контента DLC?
+
+> 📖 **Подробный пошаговый гайд** (перенос `dlc/`, склейка split-архивов, разбор ошибок): **[docs/DLC-CONTENT.md](DLC-CONTENT.md)** (на английском).
+
 Инструмент **не распространяет и не качает** DLC — контент вы приносите сами.
 Контент DLC от Paradox кросс-платформенный, поэтому обычный путь — **скопировать
 папку `dlc/` с машины, где он у вас уже есть** (например, ваша копия на

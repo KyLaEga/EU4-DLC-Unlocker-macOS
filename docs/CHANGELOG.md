@@ -3,6 +3,19 @@
 All notable changes to this project are documented here.
 The format is loosely based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [4.0.3] — 2026-06-19
+
+Documentation. No engine change.
+
+### Added
+- `docs/DLC-CONTENT.md` — a detailed guide for getting DLC content onto the Mac:
+  legally copying the `dlc/` folder from a Windows/Linux install (with the common
+  mistakes), and joining/extracting a multi-part (`*.zip.001`) archive on macOS
+  with `7zz`, including an integrity check and a `7zz` troubleshooting table.
+- All six READMEs link to the new guide from the "Where do I get the DLC content
+  files?" FAQ.
+- `--version` now reports `4.0.3`.
+
 ## [4.0.2] — 2026-06-19
 
 Documentation cleanup. No engine change.
