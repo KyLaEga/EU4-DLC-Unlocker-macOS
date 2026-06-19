@@ -283,6 +283,22 @@ EU4 ausgeliefert; siehe [docs/CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
+## 📜 Verlauf der Freischaltstrategien
+
+Der macOS-Unlocker nutzte drei verschiedene Freischaltstrategien. Wenn Sie eine
+ältere Version verwendet haben, hier was sich geändert hat und warum:
+
+| Versionen | Strategie                            | Multiplayer | Hinweise |
+|-----------|--------------------------------------|:-----------:|----------|
+| 1.x – 2.x | **Goldberg Steam Emulator**          | ❌ | *Emuliert* Steam vollständig offline und ersetzt `libsteam_api.dylib`; nutzte einen `steam_settings/`-Ordner und `steam_appid.txt`. **Nur Einzelspieler** — keine Freunde einladen, keinen Sitzungen beitreten. |
+| 3.0       | **CreamAPI + `unlockall = true`**    | ✅ | Wechsel zu einem CreamAPI-*Proxy*, der an das echte Steam weiterleitet — Multiplayer funktioniert wieder. DLC kamen aus Steams Laufzeitliste. |
+| 4.0.1+    | **CreamAPI + explizite `[dlc]`-Liste** | ✅ | Steams Laufzeitliste ist bei EU4 abgeschnitten (~⅓ freigeschaltet), daher baut der Installer die vollständige Liste nun aus Ihrem eigenen `dlc/`-Inhalt. |
+
+`uninstall` entfernt weiterhin die alten Goldberg-Artefakte (`steam_settings/`,
+`steam_appid.txt`, `*.backup`), falls Sie von einer 1.x–2.x-Installation upgraden.
+
+---
+
 ## 🔐 Sicherheit & Integrität
 
 Der Installer startet nicht, wenn die SHA256 der mitgelieferten dylib nicht mit

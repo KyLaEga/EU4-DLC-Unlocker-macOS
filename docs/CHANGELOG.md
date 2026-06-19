@@ -58,9 +58,12 @@ game-agnostic engine that reads per-game data files. Only EU4 is shipped.
 - ShellCheck: all scripts pass clean (`read -r`, directive fixes, etc.).
 
 ### Changed
-- DLC strategy: `unlockall = true` with an empty `[dlc]` section. CreamAPI
-  resolves the full DLC list from Steam at runtime — no hard-coded list to
-  maintain (removes the stale "100+ DLCs" claim).
+- DLC strategy: explicit `[dlc]` list (`unlockall = false`) built at install
+  time from the game's own `dlc/*.dlc` metadata, de-duplicated by Steam appid.
+  This replaces the original design's `unlockall = true` plan, which only
+  unlocked a fraction of EU4's DLC because Steam's runtime DLC list comes back
+  truncated for big-DLC games. Falls back to `unlockall = true` if no DLC
+  metadata is found; rebuilt on every install.
 - Documentation rewritten across all six languages: honest EULA/ban warning,
   corrected platform table (Apple Silicon is **native arm64**, not Rosetta 2),
   and removal of obsolete Goldberg / single-player-only content.
