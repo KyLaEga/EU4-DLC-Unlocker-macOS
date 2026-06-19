@@ -3,6 +3,26 @@
 All notable changes to this project are documented here.
 The format is loosely based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [4.0.2] — 2026-06-19
+
+Documentation cleanup. No engine change.
+
+### Added
+- README (all six languages): an **"Unlock strategy history"** section
+  documenting how the macOS unlocker evolved — Goldberg Steam Emulator
+  (1.x–2.x, single-player only) → CreamAPI `unlockall = true` (3.0) → CreamAPI
+  explicit `[dlc]` list (4.0.1+).
+
+### Removed
+- `docs/superpowers/specs/…v4.0-modular-rewrite-design.md` — an internal draft
+  design note that still locked in the abandoned `unlockall = true` decision and
+  was not useful to end users (kept in git history).
+
+### Fixed
+- CHANGELOG `[4.0]` entry: the DLC-strategy line still described the abandoned
+  `unlockall = true` plan instead of the shipped explicit-`[dlc]`-list behavior.
+- `--version` now reports `4.0.2`.
+
 ## [4.0.1] — 2026-06-19
 
 Documentation and packaging follow-up to 4.0. No behavior change in the engine.

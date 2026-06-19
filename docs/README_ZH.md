@@ -1,6 +1,6 @@
 # EU4 DLC 解锁器 macOS版
 
-**版本 4.0.1 — 模块化引擎，CreamAPI v5.3.0.0，完整解锁 DLC，支持多人游戏**
+**版本 4.0.2 — 模块化引擎，CreamAPI v5.3.0.0，完整解锁 DLC，支持多人游戏**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-macOS-blue.svg)](https://www.apple.com/macos/)

@@ -1,6 +1,6 @@
 # EU4 DLC Unlocker para macOS
 
-**Versión 4.0.1 — motor modular, CreamAPI v5.3.0.0, desbloqueo completo de DLC, multijugador compatible**
+**Versión 4.0.2 — motor modular, CreamAPI v5.3.0.0, desbloqueo completo de DLC, multijugador compatible**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-macOS-blue.svg)](https://www.apple.com/macos/)
